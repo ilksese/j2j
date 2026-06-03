@@ -1,7 +1,8 @@
 {
-  "name": "@ryucode/j5tj",
+  "name": "@ryucode/j2j",
   "version": "1.0.0",
   "description": "Convert JSON5/JSONC/JSON files to strict JSON",
+  "main": "./src/cli.js",
   "bin": {
     "j2j": "./bin/j2j"
   },
@@ -9,5 +10,25 @@
     "bin/",
     "src/"
   ],
-  "license": "MIT"
+  "author": "ryucode",
+  "keywords": [
+    "json5",
+    "jsonc",
+    "json",
+    "converter",
+    "cli",
+    "j2j"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilksese/j2j.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ilksese/j2j/issues"
+  },
+  "homepage": "https://github.com/ilksese/j2j#readme"
 }
