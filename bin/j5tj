@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+const { run } = require('../src/cli');
+
+const [,, ...args] = process.argv;
+const exitCode = run(args);
+process.exit(exitCode);

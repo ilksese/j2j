@@ -1,0 +1,13 @@
+{
+  "name": "j5tj",
+  "version": "1.0.0",
+  "description": "Convert JSON5/JSONC/JSON files to strict JSON",
+  "bin": {
+    "j5tj": "./bin/j5tj"
+  },
+  "files": [
+    "bin/",
+    "src/"
+  ],
+  "license": "MIT"
+}
