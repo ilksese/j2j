@@ -123,6 +123,13 @@ test('write: --output writes to custom path', () => {
 
 // --- Error tests ---
 
+test('dry-run: minify produces single-line JSON', () => {
+  const fixture = path.join(FIXTURES_DIR, 'basic.json5');
+  const { exitCode, output } = captureOutput(() => convert(fixture, { dryRun: true, minify: true }));
+  assert.equal(exitCode, 0);
+  assert.equal(output, '{"name":"JSON5","version":1,"items":[1,2,3],"nested":{"active":true}}\n');
+});
+
 test('error: non-existent file returns exit code 1', () => {
   const origErr = process.stderr.write;
   process.stderr.write = () => true;

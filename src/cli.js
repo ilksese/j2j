@@ -1,12 +1,13 @@
 const { convert } = require('./convert');
 
-const USAGE = `Usage: npx @ryucode/j2j <file> [--output=<path>] [--dry-run]
+const USAGE = `Usage: npx @ryucode/j2j <file> [--output=<path>] [--dry-run] [--minify]
 
 Convert JSON5/JSONC/JSON files to strict JSON.
 
 Options:
   --output=<path>   Write output to specified file
   --dry-run         Print result to stdout without writing
+  --minify          Output JSON as a single line (no formatting)
   --help            Show this help message
 `;
 
@@ -20,6 +21,10 @@ function run(args) {
     }
     if (arg === '--dry-run') {
       opts.dryRun = true;
+      continue;
+    }
+    if (arg === '--minify') {
+      opts.minify = true;
       continue;
     }
     if (arg.startsWith('--output=')) {

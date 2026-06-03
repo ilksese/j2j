@@ -51,7 +51,9 @@ function convert(filePath, opts) {
     }
   }
 
-  const output = JSON.stringify(parsed, null, 2) + '\n';
+  const output = opts.minify
+    ? JSON.stringify(parsed) + '\n'
+    : JSON.stringify(parsed, null, 2) + '\n';
 
   if (opts.dryRun) {
     process.stdout.write(output);
