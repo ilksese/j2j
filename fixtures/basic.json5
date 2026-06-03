@@ -1,0 +1,8 @@
+{
+  name: 'JSON5',
+  version: 0x1,
+  items: [1, 2, 3,],
+  nested: {
+    active: true,
+  },
+}

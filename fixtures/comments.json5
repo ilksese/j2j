@@ -1,0 +1,6 @@
+{
+  // single line comment
+  name: 'test', /* block comment */
+  /* another
+     block */ value: 42,
+}

@@ -1,0 +1,6 @@
+{
+  hex: 0xFF,
+  leading: .5,
+  infinity: Infinity,
+  nan: NaN,
+}
