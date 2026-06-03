@@ -145,3 +145,30 @@ test('error: invalid JSON5 returns exit code 1', () => {
     process.stderr.write = origErr;
   }
 });
+
+// --- JSON fallback tests ---
+
+test('fallback: .json with unquoted keys falls back to JSON5 preprocessing', () => {
+  const tmpDir = fs.mkdtempSync('/tmp/j2j-test-');
+  const src = path.join(tmpDir, 'unquoted.json');
+  fs.writeFileSync(src, '{ name: "ryuu" }', 'utf-8');
+  const { exitCode, output } = captureOutput(() => convert(src, { dryRun: true }));
+  assert.equal(exitCode, 0);
+  assert.equal(output, '{\n  "name": "ryuu"\n}\n');
+  fs.rmSync(tmpDir, { recursive: true, force: true });
+});
+
+test('fallback: .json with invalid content still returns exit code 1', () => {
+  const tmpDir = fs.mkdtempSync('/tmp/j2j-test-');
+  const src = path.join(tmpDir, 'broken.json');
+  fs.writeFileSync(src, '{ broken: , }', 'utf-8');
+  const origErr = process.stderr.write;
+  process.stderr.write = () => true;
+  try {
+    const exitCode = convert(src, { dryRun: true });
+    assert.equal(exitCode, 1);
+  } finally {
+    process.stderr.write = origErr;
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
+});

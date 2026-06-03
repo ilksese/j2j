@@ -35,9 +35,20 @@ function convert(filePath, opts) {
   try {
     parsed = JSON.parse(processed);
   } catch (err) {
-    const msg = err.message;
-    console.error(`[ERROR] Invalid ${type.toUpperCase()} content: ${msg}`);
-    return 1;
+    if (type === 'json') {
+      try {
+        processed = preprocessJSON5(text);
+        parsed = JSON.parse(processed);
+      } catch {
+        const msg = err.message;
+        console.error(`[ERROR] Invalid JSON content: ${msg}`);
+        return 1;
+      }
+    } else {
+      const msg = err.message;
+      console.error(`[ERROR] Invalid ${type.toUpperCase()} content: ${msg}`);
+      return 1;
+    }
   }
 
   const output = JSON.stringify(parsed, null, 2) + '\n';
