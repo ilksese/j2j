@@ -1,6 +1,6 @@
 const { convert } = require('./convert');
 
-const USAGE = `Usage: npx j5tj <file> [--output=<path>] [--dry-run]
+const USAGE = `Usage: npx @ryucode/j2j <file> [--output=<path>] [--dry-run]
 
 Convert JSON5/JSONC/JSON files to strict JSON.
 

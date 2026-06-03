@@ -104,7 +104,7 @@ test('dry-run: empty-array.json5 passes through', () => {
 // --- File output tests ---
 
 test('write: --output writes to custom path', () => {
-  const tmpDir = fs.mkdtempSync('/tmp/j5tj-test-');
+  const tmpDir = fs.mkdtempSync('/tmp/j2j-test-');
   const src = path.join(FIXTURES_DIR, 'basic.json5');
   const out = path.join(tmpDir, 'custom.json');
   const expected = fs.readFileSync(path.join(FIXTURES_DIR, 'basic.expected.json'), 'utf-8');

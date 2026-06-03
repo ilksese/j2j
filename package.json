@@ -1,9 +1,9 @@
 {
-  "name": "j5tj",
+  "name": "@ryucode/j5tj",
   "version": "1.0.0",
   "description": "Convert JSON5/JSONC/JSON files to strict JSON",
   "bin": {
-    "j5tj": "./bin/j5tj"
+    "j2j": "./bin/j2j"
   },
   "files": [
     "bin/",
