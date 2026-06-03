@@ -17,24 +17,47 @@ function preprocessJSON5(text) {
     if (text[i] === '"') {
       const start = i;
       i++;
-      while (i < text.length && !(text[i] === '"' && text[i - 1] !== '\\')) i++;
-      i++;
+      while (i < text.length) {
+        if (text[i] === '"') {
+          let backslashCount = 0;
+          let j = i - 1;
+          while (j >= start && text[j] === '\\') {
+            backslashCount++;
+            j--;
+          }
+          if (backslashCount % 2 === 0) {
+            i++;
+            break;
+          }
+        }
+        i++;
+      }
       result += text.slice(start, i);
       continue;
     }
     if (text[i] === "'") {
       result += '"';
       i++;
-      while (i < text.length && !(text[i] === "'" && text[i - 1] !== '\\')) {
-        if (text[i] === '"' && text[i - 1] !== '\\') {
-          result += '\\"';
-        } else if (text[i] === '\\' && text[i + 1] === "'") {
-          result += "'";
+      while (i < text.length) {
+        if (text[i] === '\\') {
+          const next = text[i + 1];
+          if (next === "'") {
+            result += "'";
+          } else {
+            result += '\\' + next;
+          }
           i += 2;
           continue;
-        } else {
-          result += text[i];
         }
+        if (text[i] === '"') {
+          result += '\\"';
+          i++;
+          continue;
+        }
+        if (text[i] === "'") {
+          break;
+        }
+        result += text[i];
         i++;
       }
       result += '"';
@@ -51,7 +74,7 @@ function preprocessJSON5(text) {
 
   result = result.replace(/0x([0-9a-fA-F]+)/g, (_, hex) => String(parseInt(hex, 16)));
 
-  result = result.replace(/([^.\d])(\.\d+)/g, '$10$2');
+  result = result.replace(/(^|[^.\d])(\.\d+)/g, '$10$2');
 
   result = result.replace(/[+-]\s*Infinity\b/g, 'null');
   result = result.replace(/\b(Infinity)\b/g, 'null');
@@ -79,8 +102,21 @@ function preprocessJSONC(text) {
     if (text[i] === '"') {
       const start = i;
       i++;
-      while (i < text.length && !(text[i] === '"' && text[i - 1] !== '\\')) i++;
-      i++;
+      while (i < text.length) {
+        if (text[i] === '"') {
+          let backslashCount = 0;
+          let j = i - 1;
+          while (j >= start && text[j] === '\\') {
+            backslashCount++;
+            j--;
+          }
+          if (backslashCount % 2 === 0) {
+            i++;
+            break;
+          }
+        }
+        i++;
+      }
       result += text.slice(start, i);
       continue;
     }
