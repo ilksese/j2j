@@ -75,4 +75,47 @@ function convert(filePath, opts) {
   return 0;
 }
 
-module.exports = { convert };
+function convertText(text, opts) {
+  let processed;
+  let parsed;
+
+  try {
+    processed = preprocessJSON(text);
+    parsed = JSON.parse(processed);
+  } catch {
+    try {
+      processed = preprocessJSON5(text);
+      parsed = JSON.parse(processed);
+    } catch {
+      try {
+        processed = preprocessJSONC(text);
+        parsed = JSON.parse(processed);
+      } catch (err) {
+        console.error(`[ERROR] Invalid content: ${err.message}`);
+        return 1;
+      }
+    }
+  }
+
+  const output = opts.minify
+    ? JSON.stringify(parsed) + '\n'
+    : JSON.stringify(parsed, null, 2) + '\n';
+
+  if (opts.dryRun || !opts.output) {
+    process.stdout.write(output);
+    return 0;
+  }
+
+  const outputPath = path.resolve(opts.output);
+  try {
+    fs.writeFileSync(outputPath, output, 'utf-8');
+    console.log(`Written to ${outputPath}`);
+  } catch (err) {
+    console.error(`[ERROR] Cannot write to: ${outputPath}`);
+    return 1;
+  }
+
+  return 0;
+}
+
+module.exports = { convert, convertText };

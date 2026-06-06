@@ -1,6 +1,6 @@
 {
   "name": "@ryucode/j2j",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Convert JSON5/JSONC/JSON files to strict JSON",
   "main": "./src/cli.js",
   "bin": {

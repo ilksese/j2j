@@ -8,6 +8,8 @@ Convert JSON5/JSONC/JSON files to strict JSON.
 npx @ryucode/j2j file.json5
 npx @ryucode/j2j file.jsonc --dry-run
 npx @ryucode/j2j config.json --output=config-strict.json
+cat package.json | npx @ryucode/j2j --pipeline
+echo '{a: 1, b: 2 /* comment */}' | npx @ryucode/j2j --pipeline --minify
 ```
 
 ## Options
@@ -16,6 +18,7 @@ npx @ryucode/j2j config.json --output=config-strict.json
 |--------|-------------|
 | `--output=<path>` | Write output to specified file |
 | `--dry-run` | Print result to stdout without writing |
+| `--pipeline` | Read input from stdin (pipe mode) |
 | `--help` | Show help message |
 
 ## Supported Formats

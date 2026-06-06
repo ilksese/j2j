@@ -1,6 +1,9 @@
-const { convert } = require('./convert');
+const fs = require('fs');
+const { convert, convertText } = require('./convert');
 
 const USAGE = `Usage: npx @ryucode/j2j <file> [--output=<path>] [--dry-run] [--minify]
+
+   or: npx @ryucode/j2j --pipeline [--output=<path>] [--dry-run] [--minify]
 
 Convert JSON5/JSONC/JSON files to strict JSON.
 
@@ -8,6 +11,7 @@ Options:
   --output=<path>   Write output to specified file
   --dry-run         Print result to stdout without writing
   --minify          Output JSON as a single line (no formatting)
+  --pipeline        Read input from stdin instead of a file
   --help            Show this help message
 `;
 
@@ -27,6 +31,10 @@ function run(args) {
       opts.minify = true;
       continue;
     }
+    if (arg === '--pipeline') {
+      opts.pipeline = true;
+      continue;
+    }
     if (arg.startsWith('--output=')) {
       opts.output = arg.slice('--output='.length);
       continue;
@@ -36,6 +44,17 @@ function run(args) {
       return 1;
     }
     opts.file = arg;
+  }
+
+  if (opts.pipeline) {
+    let text;
+    try {
+      text = fs.readFileSync(0, 'utf-8');
+    } catch (err) {
+      console.error('[ERROR] Cannot read from stdin');
+      return 1;
+    }
+    return convertText(text, opts);
   }
 
   if (!opts.file) {
